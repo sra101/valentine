@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Rukku ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffe4e1; /* Soft pink background */
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            z-index: 10;
+        }
+
+        .gif-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #ff4b2b;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            margin: 15px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4b2b;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+        }
+
+        #noBtn {
+            background-color: #efefef;
+            color: #333;
+            position: relative; /* Becomes fixed via JS */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        p {
+            color: #d63384;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-card" class="card">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmdueXp3eHh0NmNqNXpueGZ3eHh0NmNqNXpueGZ3eHh0NmNqNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/I7U8SSKioTFeWST9Uu/giphy.gif" alt="Please">
+        </div>
+        <h1>Rukku, will you be my Valentine? 🥺</h1>
+        <div class="btn-group">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="success-page" class="card hidden">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnA2Z3Z4eHh0NmNqNXpueGZ3eHh0NmNqNXpueGZ3eHh0NmNqNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Z9j25S9L50KxNCk9fS/giphy.gif" alt="Celebration">
+        </div>
+        <h1>Yay! Rukku said Yes! ❤️</h1>
+        <p>I'm the luckiest! See you soon!</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainCard = document.getElementById('main-card');
+        const successPage = document.getElementById('success-page');
+
+        // The runaway No button logic
+        const moveButton = () => {
+            // Subtract button size so it doesn't go off screen
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('click', moveButton); // For mobile users who tap
+
+        yesBtn.addEventListener('click', () => {
+            mainCard.classList.add('hidden');
+            successPage.classList.remove('hidden');
+            
+            // Heart-shaped confetti celebration
+            const count = 200;
+            const defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti({
+                    ...defaults,
+                    ...opts,
+                    particleCount: Math.floor(count * particleRatio)
+                });
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        });
+    </script>
+</body>
+</html>
